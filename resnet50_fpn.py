@@ -101,9 +101,9 @@ def testFPN():
     inputs=img
     [p2_out, p3_out, p4_out, p5_out] = resnet50_fpn(inputs)  #/4  /8 /16 /32
 
-    p2_out_show=p2_out.reshape(256, 112, 112)
-    p2_out_show=T.ToPILImage()(p2_out_show)
-    p2_out_show.show()
+    # p2_out_show=p2_out.reshape(256, 112, 112)
+    # p2_out_show=T.ToPILImage()(p2_out_show)
+    # p2_out_show.show()
 
 if __name__=='__main__':
     testFPN()
