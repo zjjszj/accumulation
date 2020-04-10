@@ -58,7 +58,7 @@ class FPN(nn.Module):
 
 #使用预定义模型
 from torchvision.models.resnet import resnet50
-
+import torch.nn.functional as F
 
 
 
@@ -77,6 +77,7 @@ preprocess = T.Compose([
 )
 img=preprocess(img)
 img=img.reshape(1,3,448,448)   #torch.float32
+
 plt.imshow(img.reshape(3,448,448).data.numpy()[0,:,:])
 plt.show()
 
