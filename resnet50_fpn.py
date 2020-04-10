@@ -81,6 +81,8 @@ img=img.reshape(1,3,448,448)   #torch.float32
 img_show=img.reshape(3,448,448).data.numpy()
 img_show=np.transpose(img_show,(1,2,0))
 plt.imshow(img_show)
+plt.axis("off")
+plt.title('row img')
 plt.show()
 
 
