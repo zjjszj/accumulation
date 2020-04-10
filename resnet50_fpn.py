@@ -65,7 +65,7 @@ from torchvision.models.resnet import resnet50
 ##############################test###########################################
 from PIL import Image
 import torchvision.transforms as T
-
+import matplotlib.pyplot as plt
 
 
 #预处理输入数据
@@ -77,12 +77,10 @@ preprocess = T.Compose([
 )
 img=preprocess(img)
 img=img.reshape(1,3,448,448)   #torch.float32
-# plt.imshow(img.reshape(3,448,448)[0,:,:])
-# plt.show()
+plt.imshow(img.reshape(3,448,448)[0,:,:])
+plt.show()
 
 
-# plt.imshow(p2_out.reshape(512,112,112).data.numpy()[0,:,:])
-# plt.show()
 
 def testFPN():
     net = resnet50()
@@ -99,10 +97,9 @@ def testFPN():
     resnet50_fpn = FPN(c1, c2, c3, c4, c5, 256)
     inputs=img
     [p2_out, p3_out, p4_out, p5_out] = resnet50_fpn(inputs)  #/4  /8 /16 /32
-    print(p2_out.shape)
-    print(p3_out.shape)
-    print(p4_out.shape)
-    print(p5_out.shape)
+
+    plt.imshow(p2_out.reshape(512, 112, 112).data.numpy()[0, :, :])
+    plt.show()
 
 
 if __name__=='__main__':
