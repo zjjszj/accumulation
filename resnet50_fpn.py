@@ -98,7 +98,7 @@ def testFPN():
     inputs=img
     [p2_out, p3_out, p4_out, p5_out] = resnet50_fpn(inputs)  #/4  /8 /16 /32
 
-    plt.imshow(p2_out.reshape(512, 112, 112).data.numpy()[0, :, :])
+    plt.imshow(p2_out.reshape(256, 112, 112).data.numpy()[0, :, :])
     plt.show()
 
 
