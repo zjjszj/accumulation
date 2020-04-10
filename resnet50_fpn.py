@@ -77,7 +77,7 @@ preprocess = T.Compose([
 )
 img=preprocess(img)
 img=img.reshape(1,3,448,448)   #torch.float32
-plt.imshow(img.reshape(3,448,448))
+plt.imshow(img.reshape(3,448,448).data.numpy()[0,:,:])
 plt.show()
 
 
@@ -98,7 +98,7 @@ def testFPN():
     inputs=img
     [p2_out, p3_out, p4_out, p5_out] = resnet50_fpn(inputs)  #/4  /8 /16 /32
 
-    plt.imshow(p2_out.reshape(256, 112, 112).data.numpy())
+    plt.imshow(p2_out.reshape(256, 112, 112).data.numpy()[0, :, :])
     plt.show()
 
 
