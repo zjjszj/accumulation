@@ -1,3 +1,7 @@
+"""
+@author: zj
+@contact: zjjszj@gmail.com
+"""
 ##used to kaggle
 ##cam original used to classification so I update it. Regard 128d vector in fully connected layer
 ##as classifaction vector.

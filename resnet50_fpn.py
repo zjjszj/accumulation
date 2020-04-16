@@ -1,4 +1,7 @@
-
+"""
+@author: zj
+@contact: zjjszj@gmail.com
+"""
 import torch.nn as nn
 import numpy as np
 import math
@@ -34,6 +37,7 @@ class FPN(nn.Module):
         )
 
     def forward(self, x):
+        #bottom->top
         x = self.C1(x)
         x = self.C2(x)
         c2_out = x
@@ -42,16 +46,18 @@ class FPN(nn.Module):
         x = self.C4(x)
         c4_out = x
         x = self.C5(x)
+
+        #left->right && top->bottom
         p5_out = self.P5_latlayer(x)
         p4_out = self.P4_latlayer(c4_out) + F.interpolate(p5_out, (c4_out.shape[2],c4_out.shape[3]))
         p3_out = self.P3_latlayer(c3_out) + F.interpolate(p4_out, (c3_out.shape[2],c3_out.shape[3]))
         p2_out = self.P2_latlayer(c2_out) + F.interpolate(p3_out, (c2_out.shape[2],c2_out.shape[3]))
 
+        #smooth
         p5_out = self.P5_smooth(p5_out)
         p4_out = self.P4_smooth(p4_out)
         p3_out = self.P3_smooth(p3_out)
         p2_out = self.P2_smooth(p2_out)
-
         return [p2_out, p3_out, p4_out, p5_out]
 
 
@@ -59,7 +65,6 @@ class FPN(nn.Module):
 #使用预定义模型
 from torchvision.models.resnet import resnet50
 import torch.nn.functional as F
-
 
 
 ##############################test###########################################
