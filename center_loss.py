@@ -71,7 +71,6 @@ class MyCenterLoss(nn.Module):
         :return:
         """
         assert inputs.size(1)==self.feat_dim, 'inputs`s dim{0} should be equal to {1}'.format(inputs.size(1), self.feat_dim)
-
         batch_size=torch.tensor(inputs.size(0)) if self.size_average else torch.tensor(1)
         loss=self.centerloss(inputs, labels, self.centers, batch_size)
         return loss
