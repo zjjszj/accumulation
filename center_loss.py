@@ -60,7 +60,7 @@ class MyCenterLoss(nn.Module):
         super(MyCenterLoss, self).__init__()
         self.feat_dim=feat_dim
         self.size_average=size_average
-        self.centers=nn.Parameter(torch.ones((num_classes, feat_dim)).cuda())
+        self.centers=nn.Parameter(torch.ones((num_classes, feat_dim)).cuda(), requires_grad=True)
         self.centerloss=ComputeCenterLoss.apply
 
     def forward(self, inputs, labels):
@@ -98,6 +98,7 @@ class ComputeCenterLoss(Function):
 
 
 if __name__=='__main__':
+    #test mycenterloss
     inputs=torch.randn((4,3)).cuda().requires_grad_()
     labels=torch.Tensor([0,1,2,3]).long().cuda()
     my_center_criterion=MyCenterLoss(4,3)
