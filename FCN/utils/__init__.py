@@ -1,0 +1,1 @@
+from .metric import label_accuracy_score
