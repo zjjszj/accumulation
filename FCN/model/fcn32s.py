@@ -82,6 +82,8 @@ if __name__ == '__main__':
 
     model_cfg='../configs/vgg16-fcn32s.cfg'
     model=FCN32S(cfg, model_cfg)
-
+    input=torch.zeros(1,3,375,500)
+    out=model(input)
+    print(out.shape)
 
 

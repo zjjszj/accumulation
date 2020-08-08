@@ -2,6 +2,8 @@ from .datasets.voc import VocSegDataset
 from .transforms import build_transform
 import os
 import torch.utils.data as Data
+import platform
+
 
 def build_dataset(cfg, trans, is_train=True):
     dataset=VocSegDataset(cfg, trans, is_train)
@@ -15,7 +17,7 @@ def make_data_loader(cfg, is_train):
     else:
         batch_size = cfg.TEST.IMS_PER_BATCH
         shuffle=False
-    workers=min([os.cpu_count(), batch_size if batch_size > 1 else 1, 8])  # [1, 8]
+    workers=min([os.cpu_count(), batch_size if batch_size > 1 else 1, 8]) if  platform.system().lower()=='wondows' else 0  # [1, 8]
 
     transform=build_transform(cfg, is_train)
     dataset=build_dataset(cfg, transform, is_train)

@@ -4,7 +4,8 @@ from tqdm import tqdm
 import math
 from torchvision.models.vgg import vgg16
 import torch.utils.data as Data
+import platform
 
-Data.DataLoader
-
-
+a=torch.tensor([2,3])
+a.to(device='cpu')
+print(a)
