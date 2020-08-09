@@ -63,9 +63,11 @@ class FCN32S(nn.Module):
                     self.module_list[15][1], self.module_list[16][0], self.module_list[16][1], self.module_list[17]
                     ]
         for f1, f2 in zip(features, bb.features):
-            if isinstance(f1, nn.Conv2d):
-                f1.weight.data = f2.weight.data
-                f1.bias.data = f2.bias.data
+            if isinstance(f1, nn.Conv2d) and isinstance(f2, nn.Conv2d):
+                assert f1.weight.size()==f2.weight.size()
+                assert f1.bias.size() == f2.bias.size()
+                f1.weight.data.copy_(f2.weight.data)
+                f1.bias.data.copy_(f2.bias.data)
         # initialize fc1 and fc2
         self.module_list[18][0].weight.data=bb.classifier[0].weight.view(self.module_list[18][0].weight.size())     #fc1
         self.module_list[20][0].weight.data=bb.classifier[0].weight.view(self.module_list[18][0].weight.size())     #fc2
