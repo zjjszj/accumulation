@@ -59,7 +59,7 @@ def load_reuse(cfg, model, weight_path, optimizer, result_file):
     return r
 
 
-def build_model_optim(cfg, result_file=None, weight_path=None, model_cfg='../configs/vgg16-fcn32s.cfg'):
+def build_model_optim(cfg, result_file=None, weight_path=None, model_cfg='FCN/configs/vgg16-fcn32s.cfg'):
     """return {'model':model, 'optimizer': optimizer}
 
     """
