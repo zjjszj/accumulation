@@ -71,9 +71,8 @@ class FCN32S(nn.Module):
         self.module_list[20][0].weight.data=bb.classifier[0].weight.view(self.module_list[18][0].weight.size())     #fc2
         # initialize 1x1 with zero
         self.module_list[22][0].weight.data.zero_()
-        if self.module_list[22][0].bias:
+        if self.module_list[22][0].bias is not None:
             self.module_list[22][0].bias.data.zero_()
-        print('load_backbone=======================================')
 
 
 

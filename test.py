@@ -7,5 +7,5 @@ import torch.utils.data as Data
 import platform
 
 a=torch.tensor([2,3])
-a.to(device='cpu')
-print(a)
+if a is not None:
+    print(2)
