@@ -58,7 +58,7 @@ def train(cfg, model_cfg='FCN/configs/vgg16-fcn32s.cfg'):
         for i, (imgs, targets) in pbar:
             imgs, targets=imgs.to(device=device), targets.to(device=device)
             # --multi scale--
-
+            print('imgs.shape=====================', imgs.shape)
             outputs=model(imgs)
             loss=cross_entropy2d(outputs, targets)      # per sample
             optimizer.zero_grad()

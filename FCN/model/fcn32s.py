@@ -30,8 +30,8 @@ class FCN32S(nn.Module):
                 else:
                     x=module(x, shape=None, outputs=outputs)
             else:
+                print('x.shape========================', x[0].shape)
                 x=module(x)
-                # print('x.shape=', x[0].shape)
             outputs.append(x if self.routs[i] else [])      # outputs include all layers
 
         return x
@@ -82,7 +82,7 @@ if __name__ == '__main__':
 
     model_cfg='../configs/vgg16-fcn32s.cfg'
     model=FCN32S(cfg, model_cfg)
-    input=torch.zeros(1,3,375,500)
+    input=torch.randn(1,3,375,500)
     out=model(input)
     print(out.shape)
 
