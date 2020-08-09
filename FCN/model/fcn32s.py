@@ -73,6 +73,7 @@ class FCN32S(nn.Module):
         self.module_list[22][0].weight.data.zero_()
         if self.module_list[22][0].bias:
             self.module_list[22][0].bias.data.zero_()
+        print('load_backbone=======================================')
 
 
 
