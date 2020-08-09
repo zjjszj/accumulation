@@ -20,7 +20,7 @@ last = wdir + 'last.pt'
 best = wdir + 'best.pt'
 
 
-def train(cfg, model_cfg='../configs/vgg16-fcn32s.cfg'):
+def train(cfg, model_cfg='FCN/configs/vgg16-fcn32s.cfg'):
     epochs=cfg.SOLVER.MAX_EPOCHS
     start_epoch=0
     device = cfg.MODEL.DEVICE
@@ -127,7 +127,7 @@ def train(cfg, model_cfg='../configs/vgg16-fcn32s.cfg'):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="PyTorch FCN Training")
-    parser.add_argument("--config_file", default="../config/defaults.py", help="path to config file", type=str)
+    parser.add_argument("--config_file", default="FCN/config/defaults.py", help="path to config file", type=str)
     parser.add_argument("opts", help="Modify config options using the command-line", default=None, nargs=argparse.REMAINDER)
     opt = parser.parse_args()
 
