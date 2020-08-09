@@ -27,9 +27,9 @@ class VocSegDataset(data.Dataset):
 
     def __getitem__(self, item):
         if self.trans:
-            img, label=self.trans(Image.open(self.data_path_list[item]), Image.open(self.label_path_list[item]))
+            img, label=self.trans(Image.open(self.data_path_list[item]).convert("RGB"), Image.open(self.label_path_list[item]).convert("RGB"))
         else:
-            img, label=Image.open(self.data_path_list[item]), Image.open(self.label_path_list[item])
+            img, label=Image.open(self.data_path_list[item]).convert("RGB"), Image.open(self.label_path_list[item]).convert("RGB")
         return img, label
 
     def __len__(self):
@@ -42,8 +42,8 @@ if __name__ == '__main__':
     from FCN.config import cfg
 
     i, label=read_images(cfg.DATASETS.ROOT)
-    from PIL import Image
     import numpy as np
+
     img=Image.open(label[0])
     img.show()
     img_arr=np.array(img)
