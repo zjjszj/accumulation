@@ -41,7 +41,7 @@ class VocSegDataset(data.Dataset):
 if __name__ == '__main__':
     from FCN.config import cfg
 
-    i, label=read_images(cfg.DATASETS.ROOT)
+    i, label=read_images(voc_root)
     import numpy as np
 
     img=Image.open(label[0])
