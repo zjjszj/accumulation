@@ -33,7 +33,7 @@ def train(cfg, model_cfg='FCN/configs/vgg16-fcn32s.cfg'):
 
     # building model and optimizer also reuse.
     r=build_model_optim(cfg, model_cfg)
-    model=r['model']
+    model=r['model'].to(device=device)
     optimizer=r['optimizer']
     if cfg.MODEL.REFUSE.WEIGHT.strip():
         start_epoch=r['epoch']+1
