@@ -26,10 +26,7 @@ class VocSegDataset(data.Dataset):
         self.data_path_list, self.label_path_list=read_images(root=self.cfg.DATASETS.ROOT, train=train)
 
     def __getitem__(self, item):
-        if self.trans:
-            img, label=self.trans(Image.open(self.data_path_list[item]).convert("RGB"), Image.open(self.label_path_list[item]))
-        else:
-            img, label=Image.open(self.data_path_list[item]).convert("RGB"), Image.open(self.label_path_list[item])
+        img, label=self.trans(Image.open(self.data_path_list[item]), Image.open(self.label_path_list[item]))
         return img, label
 
     def __len__(self):
