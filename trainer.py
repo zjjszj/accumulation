@@ -61,7 +61,7 @@ def train(cfg, model_cfg='FCN/configs/vgg16-fcn32s.cfg'):
             # --multi scale--
             print('imgs.shape=====================', imgs.shape)
             # outputs=model(imgs)
-            outputs=imgs.repeat(1,7,1,1)
+            outputs=imgs.repeat(1,7,1,1).requires_grad_(True)
             loss=cross_entropy2d(outputs, targets)      # per sample
             print('loss===============', loss)
             optimizer.zero_grad()

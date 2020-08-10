@@ -9,5 +9,4 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 a=torch.randn(2,3, dtype=torch.float32,requires_grad=True)
-a=F.softmax(a)
-print(a)
+a.requires_grad_(True)
