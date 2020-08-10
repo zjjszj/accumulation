@@ -17,8 +17,8 @@ def cross_entropy2d(pred, target, weight=None, size_average=True):
     log_pred=log_pred.transpose_(1, 2).transpose_(2, 3).contiguous()
 
     # log_pred: (bs*h*w, c)
+    log_pred=log_pred[target.view(bs, h, w, 1).repeat(1, 1, 1, c)>=0]  # promising the shape of log_pred is the same as target.
     log_pred=log_pred.view(-1, c)
-    # log_pred=log_pred[target.view(bs, h, w, 1).repeat(1, 1, 1, c)>=0]  promising the shape of log_pred is the same as target.
 
     # target: (bs*h*w,)
     mask=target>=0
