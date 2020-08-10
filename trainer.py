@@ -148,8 +148,7 @@ if __name__ == '__main__':
     tb_writer = SummaryWriter()
 
     # save dir
-    os.makedirs(last, exist_ok=True)
-    os.makedirs(best, exist_ok=True)
+    os.makedirs(wdir, exist_ok=True)
 
     train(cfg)
 
