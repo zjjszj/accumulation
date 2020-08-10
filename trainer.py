@@ -56,9 +56,10 @@ def train(cfg, model_cfg='FCN/configs/vgg16-fcn32s.cfg'):
         mloss=torch.zeros(1)
         nb=len(train_loader)        # number of batch.
         pbar = tqdm(enumerate(train_loader), total=nb)  # progress bar
-        #for i, (imgs, targets) in pbar:
-        for i, (imgs, targets) in enumerate(train_loader):
-            imgs, targets=imgs.to(device=device), targets.to(device=device)
+        for i, (imgs, targets) in pbar:
+            #imgs, targets=imgs.to(device=device), targets.to(device=device)
+            imgs=imgs.cuda()
+            targets=targets.cuda()
             # --multi scale--
 
             print('imgs.shape=====================', imgs.shape)
