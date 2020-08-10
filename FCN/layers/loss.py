@@ -9,9 +9,9 @@ def cross_entropy2d(pred, target, weight=None, size_average=True):
         size_average: compute loss per sample
     """
     bs, c, h, w=pred.size()
-    softmax=nn.LogSoftmax(dim=1)
-    log_pred=softmax(pred)
-    #log_pred=F.log_softmax(pred, dim=1)
+    # softmax=nn.LogSoftmax(dim=1)
+    # log_pred=softmax(pred)
+    log_pred=F.log_softmax(pred, dim=1)
 
     # log_pred: (bs, h, w, c)
     log_pred=log_pred.transpose_(1, 2).transpose_(2, 3).contiguous()
