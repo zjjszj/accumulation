@@ -19,8 +19,8 @@ class Inference:
         mloss=torch.zeros(1)
         eval_loss,  eval_acc, eval_acc_cls, eval_mean_iu, eval_fwavacc= 0, 0, 0, 0, 0
 
-        pbar=tqdm(enumerate(self.loader), nb=len(self.loader))
-        for i, data in enumerate(pbar):
+        pbar=tqdm(enumerate(self.loader), total=len(self.loader))
+        for i, data in pbar:
             imgs, label=data
             imgs, label=imgs.to(self.device), label.to(self.device)
             out=self.model(imgs)
