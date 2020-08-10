@@ -24,7 +24,7 @@ def build_transform(cfg, is_train=True, flip=False, crop2batchshape=False):
             img=normalize(img)
             label=np.array(target, dtype=np.int64)
             # remove boundary
-            label[label==255]=-1
+            # label[label==255]=-1
             label=torch.from_numpy(label)
             return img, label
         return transform

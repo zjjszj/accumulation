@@ -37,7 +37,7 @@ import torch
 
 
 if __name__ == '__main__':
-    pred=torch.randn(2,3,10,10)
-    target=torch.randn(2,10,10).random_(0, 3).to(dtype=torch.int64)
+    pred=torch.randn(1,21,375,500)
+    target=torch.randn(1,375,500).random_(0, 21).to(dtype=torch.int64)
     loss=(cross_entropy2d(pred, target))
     print(loss)
