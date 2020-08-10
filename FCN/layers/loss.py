@@ -29,7 +29,7 @@ def cross_entropy2d(pred, target, weight=None, size_average=True):
     print('target.size()============', target.size())
     loss=F.nll_loss(log_pred, target, weight, reduction='sum')
     if size_average:        # reduce loss vsalue
-        loss/=mask.data.sum()
+        loss/=mask.data.sum() 
     return loss
 
 
