@@ -54,7 +54,7 @@ def build_untransform(cfg):
         origin_img = origin_img.astype(np.uint8)
 
         label = target.numpy()
-        label[label == -1] = 0
+        # label[label == -1] = 0
         return origin_img, label
 
     return untransform

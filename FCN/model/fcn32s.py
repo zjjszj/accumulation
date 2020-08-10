@@ -17,6 +17,7 @@ class FCN32S(nn.Module):
 
     def forward(self, x, verbose=False):
         bsp=x.shape[-2:]
+        bsp=torch.tensor(bsp, requires_grad=False)
         outputs=[]
         for i, module in enumerate(self.module_list):
             name = module.__class__.__name__
