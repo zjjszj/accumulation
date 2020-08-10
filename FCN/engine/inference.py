@@ -18,9 +18,9 @@ class Inference:
 
         mloss=torch.zeros(1)
         eval_loss,  eval_acc, eval_acc_cls, eval_mean_iu, eval_fwavacc= 0, 0, 0, 0, 0
-        pbar=tqdm(enumerate(self.loader), total=len(self.loader))
+        # pbar=tqdm(enumerate(self.loader), total=len(self.loader))
         with torch.no_grad:
-            for i, data in pbar:
+            for i, data in self.loader:
                 imgs, label=data
                 imgs, label=imgs.to(self.device), label.to(self.device)
                 out=self.model(imgs)
@@ -37,6 +37,7 @@ class Inference:
                     eval_fwavacc += fwavacc
 
                 s=('loss=%.5g\teval_acc=%5.g\teval_acc_cls=%5.g\teval_mean_iu=%5.g\teval_fwavacc=%5.g')%(loss, eval_acc, eval_acc_cls, eval_mean_iu, eval_fwavacc)
-                pbar.set_description(s)
+                #pbar.set_description(s)
+                print(s)
         return mloss, eval_acc, eval_acc_cls, eval_mean_iu, eval_fwavacc
 
