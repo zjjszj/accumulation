@@ -88,9 +88,9 @@ def train(cfg, model_cfg='FCN/configs/vgg16-fcn32s.cfg'):
         scheduler.step()
 
         # test
+        print('----------------------------------------------------', opt.notest)
         final_epoch=epoch+1==epochs
         if not opt.notest or final_epoch:
-            print('----------------------------', opt.notest)
             results=inference.evaluate()
 
         # write result (train + val) accumulation
