@@ -8,8 +8,6 @@ def cross_entropy2d(pred, target, weight=None, size_average=True):
         target: (bs, h, w)
         size_average: compute loss per sample
     """
-    print('pred.size()============', pred.size())
-    print('target.size()============', target.size())
     bs, c, h, w=pred.size()
     softmax=nn.LogSoftmax(dim=1)
     log_pred=softmax(pred)
@@ -25,8 +23,6 @@ def cross_entropy2d(pred, target, weight=None, size_average=True):
     # target: (bs*h*w,)
     mask=target>=0
     target=target[mask]
-    print('log_pred.size()============', log_pred.size())
-    print('target.size()============', target.size())
     loss=F.nll_loss(log_pred, target, weight, reduction='sum')
     if size_average:        # reduce loss vsalue
         loss/=mask.data.sum()

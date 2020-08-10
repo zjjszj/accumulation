@@ -30,7 +30,7 @@ class FCN32S(nn.Module):
                 else:
                     x=module(x, shape=None, outputs=outputs)
             else:
-                print('x.shape========================', x[0].shape)
+                # print('x.shape========================', x[0].shape)
                 x=module(x)
             outputs.append(x if self.routs[i] else [])      # outputs include all layers
 
