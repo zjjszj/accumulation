@@ -8,5 +8,6 @@ import platform
 import torch.nn as nn
 import torch.nn.functional as F
 
-a=torch.randn(2,3, dtype=torch.float32,requires_grad=True)
-a.requires_grad_(True)
+a=torch.tensor([2,3])
+b=a
+print(a.cuda())

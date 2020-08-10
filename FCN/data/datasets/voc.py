@@ -37,11 +37,20 @@ class VocSegDataset(data.Dataset):
 
 if __name__ == '__main__':
     from FCN.config import cfg
-
-    i, label=read_images(voc_root)
+    from FCN.data.transforms import build_transform
     import numpy as np
 
-    img=Image.open(label[0]).convert("RGB")
-    img.show()
-    img_arr=np.array(img)
-    print(img_arr.shape)
+
+    trans=build_transform(cfg)
+    cfg.DATASETS.ROOT = '../../../images/voc2012'
+
+    v=VocSegDataset(cfg, trans)
+
+    for i,l in v:
+        print(i)
+        break
+    # i, label=read_images(voc_root)
+    # img=Image.open(label[0])
+    # img.show()
+    # img_arr=np.array(img)
+    # print(img_arr.shape)
