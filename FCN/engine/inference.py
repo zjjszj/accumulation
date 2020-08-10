@@ -14,7 +14,7 @@ class Inference:
         """return mloss and metrics
 
         """
-        self.model.val()
+        self.model.eval()
 
         mloss=torch.zeros(1)
         eval_loss,  eval_acc, eval_acc_cls, eval_mean_iu, eval_fwavacc= 0, 0, 0, 0, 0
