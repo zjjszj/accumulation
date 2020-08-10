@@ -22,5 +22,4 @@ class Crop(nn.Module):
         if outputs:
             return outputs[self.layer][:, :, self.offset:self.offset+x.shape[-2], self.offset:self.offset+x.shape[-1]]
         else:
-            # return x[:, :, self.offset:self.offset+shape[0], self.offset:self.offset+shape[1]].contiguous()
-            return torch.randn(1, 21, 375, 500,requires_grad=True, dtype=torch.float32).cuda()
+            return x[:, :, self.offset:self.offset+shape[0], self.offset:self.offset+shape[1]].contiguous()

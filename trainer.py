@@ -13,6 +13,7 @@ from FCN.engine.inference import Inference
 import os
 import argparse
 from torch.utils.tensorboard import SummaryWriter
+import torch.nn.functional as F
 
 
 wdir = 'weights' + os.sep  # weights dir
@@ -59,7 +60,8 @@ def train(cfg, model_cfg='FCN/configs/vgg16-fcn32s.cfg'):
             imgs, targets=imgs.to(device=device), targets.to(device=device)
             # --multi scale--
             print('imgs.shape=====================', imgs.shape)
-            outputs=model(imgs)
+            # outputs=model(imgs)
+            outputs=F.softmax(imgs, dim=1)
             loss=cross_entropy2d(outputs, targets)      # per sample
             print('loss===============', loss)
             optimizer.zero_grad()
