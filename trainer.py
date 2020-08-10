@@ -16,7 +16,7 @@ from torch.utils.tensorboard import SummaryWriter
 import torch.nn.functional as F
 
 
-wdir = 'weights' + os.sep  # weights dir
+wdir = 'FCN' +os.sep+ 'weights' + os.sep  # weights dir
 last = wdir + 'last.pt'
 best = wdir + 'best.pt'
 
@@ -146,6 +146,10 @@ if __name__ == '__main__':
     # tb_writer
     print('Start Tensorboard with "tensorboard --logdir=runs", view at http://localhost:6006/')
     tb_writer = SummaryWriter()
+
+    # save dir
+    os.makedirs(last, exist_ok=True)
+    os.makedirs(best, exist_ok=True)
 
     train(cfg)
 
