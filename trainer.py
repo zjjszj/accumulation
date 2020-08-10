@@ -79,7 +79,7 @@ def train(cfg, model_cfg='FCN/configs/vgg16-fcn32s.cfg'):
                 eval_acc_cls += acc_cls
                 eval_mean_iu += mean_iu
                 eval_fwavacc += fwavacc
-
+            print('eval_acc, eval_acc_cls  eval_mean_iu  eval_fwavacc==========', eval_acc, eval_acc_cls, eval_mean_iu, eval_fwavacc)
             mloss=(mloss*i+loss)/(i+1)   # mean loss per batch
             mem = '%.3gG' % (torch.cuda.memory_cached() / 1E9 if torch.cuda.is_available() else 0)  # (GB)
             s = ('%10s' * 2 + '%10.3g') % ('%g/%g' % (epoch, epochs - 1), mem, mloss)
@@ -133,6 +133,7 @@ def train(cfg, model_cfg='FCN/configs/vgg16-fcn32s.cfg'):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="PyTorch FCN Training")
     parser.add_argument("--config_file", default="FCN/config/defaults.py", help="path to config file", type=str)
+    parser.add_argument("--notest", default="False", help="val per epoch otherwise only val in last epoch.", type=str)
     parser.add_argument("opts", help="Modify config options using the command-line", default=None, nargs=argparse.REMAINDER)
     opt = parser.parse_args()
 
