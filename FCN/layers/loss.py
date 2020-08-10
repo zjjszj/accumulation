@@ -29,6 +29,14 @@ def cross_entropy2d(pred, target, weight=None, size_average=True):
     return loss
 
 
+def cross_entropy4d(pred, target):
+    bs, c, h, w=pred.size()
+    target[target<0]=0
+    loss=nn.CrossEntropyLoss(reduction='sum')(pred, target)
+    return loss/(h * w)
+
+
+
 import torch
 
 

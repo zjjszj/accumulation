@@ -7,7 +7,7 @@ import math
 import torch.optim.lr_scheduler as lr_scheduler
 import torch
 from tqdm import tqdm
-from FCN.layers import cross_entropy2d
+from FCN.layers import cross_entropy2d, cross_entropy4d
 from FCN.utils import label_accuracy_score
 from FCN.engine.inference import Inference
 import os
@@ -57,15 +57,14 @@ def train(cfg, model_cfg='FCN/configs/vgg16-fcn32s.cfg'):
         nb=len(train_loader)        # number of batch.
         pbar = tqdm(enumerate(train_loader), total=nb)  # progress bar
         for i, (imgs, targets) in pbar:
-            #imgs, targets=imgs.to(device=device), targets.to(device=device)
-            imgs=imgs.cuda()
-            targets=targets.cuda()
+            imgs, targets=imgs.to(device=device), targets.to(device=device)
             # --multi scale--
 
             print('imgs.shape=====================', imgs.shape)
             outputs=model(imgs)
             # outputs=imgs.repeat(1,7,1,1).requires_grad_(True)
-            loss=cross_entropy2d(outputs, targets)      # per sample
+            # loss=cross_entropy2d(outputs, targets)      # per sample
+            loss=cross_entropy4d(outputs, targets)      # per sample
             print('loss===============', loss)
             optimizer.zero_grad()
             loss.backward()
