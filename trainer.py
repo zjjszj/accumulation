@@ -27,6 +27,7 @@ def train(cfg, model_cfg='FCN/configs/vgg16-fcn32s.cfg'):
     device = cfg.MODEL.DEVICE
     results_file=cfg.RESULT_FILE
     nc=cfg.MODEL.NUM_CLASSES        # number of classes
+    best_fitness=0.0
 
     # dataset
     train_loader=make_data_loader(cfg, is_train=True)
@@ -105,7 +106,8 @@ def train(cfg, model_cfg='FCN/configs/vgg16-fcn32s.cfg'):
                 tb_writer.add_scalar(tag, l, epoch)
 
         # update acc
-        best_fitness=list(results)[0] if list(results)[0]>best_fitness else 0.0
+        if list(results)[0] > best_fitness:
+            best_fitness=list(results)[0]
 
         # save model: save model best and last epoch.
         if best_fitness or final_epoch:
