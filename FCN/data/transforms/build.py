@@ -23,8 +23,8 @@ def build_transform(cfg, is_train=True, flip=False, crop2batchshape=False):
             img=T.ToTensor()(img)
             img=normalize(img)
             label=np.array(target, dtype=np.int64)
-            # remove boundary
-            # label[label==255]=-1
+            # update boundary
+            label[label==255]=0
             label=torch.from_numpy(label)
             return img, label
         return transform
