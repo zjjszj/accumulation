@@ -57,7 +57,7 @@ def train(cfg, model_cfg='FCN/configs/vgg16-fcn32s.cfg'):
         nb=len(train_loader)        # number of batch.
         pbar = tqdm(enumerate(train_loader), total=nb)  # progress bar
         #for i, (imgs, targets) in pbar:
-        for i, (imgs, targets) in train_loader:
+        for i, (imgs, targets) in enumerate(train_loader):
             imgs, targets=imgs.to(device=device), targets.to(device=device)
             # --multi scale--
 
