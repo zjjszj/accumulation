@@ -36,7 +36,7 @@ class Inference:
                     eval_mean_iu += mean_iu
                     eval_fwavacc += fwavacc
 
-                s=('loss=%.5g\teval_acc=%5.g\teval_acc_cls=%5.g\teval_mean_iu=%5.g\teval_fwavacc=%5.g')%(loss, eval_acc, eval_acc_cls, eval_mean_iu, eval_fwavacc)
+                s=('loss=%5.5g\teval_acc=%5.5g\teval_acc_cls=%5.5g\teval_mean_iu=%5.5g\teval_fwavacc=%5.5g')%(loss, eval_acc, eval_acc_cls, eval_mean_iu, eval_fwavacc)
                 pbar.set_description(s)
                 # print(s)
         return mloss, eval_acc, eval_acc_cls, eval_mean_iu, eval_fwavacc

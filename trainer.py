@@ -95,7 +95,7 @@ def train(cfg, model_cfg='FCN/configs/vgg16-fcn32s.cfg'):
 
         # write result (train + val) accumulation
         with open(results_file, 'a') as f:
-            f.write(s+'%5.5g'*5 % results + '\n')
+            f.write(s+'%10.5g'*5 % results + '\n')
 
         # tensorboard (train + val)
         train_results=[mloss, eval_acc, eval_acc_cls, eval_mean_iu, eval_fwavacc]

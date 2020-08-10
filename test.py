@@ -8,6 +8,8 @@ import platform
 import torch.nn as nn
 import torch.nn.functional as F
 
-a=False
-if not a or False:
-    print(2)
+s = ('%10s' * 2 + '%10.3g') % ('%g/%g' % (1, 2), 3, 4)
+def a():
+    return 2.2, 3.3, 4.4
+r=a()
+print(s+'%10.5g' * 3% r)
