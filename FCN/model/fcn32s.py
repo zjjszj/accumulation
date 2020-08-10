@@ -70,7 +70,7 @@ class FCN32S(nn.Module):
                 f1.bias.data.copy_(f2.bias.data)
         # initialize fc1 and fc2
         self.module_list[18][0].weight.data.copy_(bb.classifier[0].weight.view(self.module_list[18][0].weight.size()))     #fc1
-        self.module_list[20][0].weight.data.copy_(bb.classifier[0].weight.view(self.module_list[20][0].weight.size()))     #fc2
+        self.module_list[20][0].weight.data.copy_(bb.classifier[3].weight.view(self.module_list[20][0].weight.size()))     #fc2
         # initialize 1x1 with zero
         self.module_list[22][0].weight.data.zero_()
         if self.module_list[22][0].bias is not None:

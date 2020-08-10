@@ -6,5 +6,4 @@ from torchvision.models.vgg import vgg16
 import torch.utils.data as Data
 import platform
 
-a=torch.tensor([2,3])
-a.size
+print(vgg16())
