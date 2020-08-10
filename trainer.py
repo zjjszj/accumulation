@@ -44,7 +44,7 @@ def train(cfg, model_cfg='FCN/configs/vgg16-fcn32s.cfg'):
     scheduler.last_epoch = start_epoch - 1
 
     # inference object
-    inference=Inference(cfg, model, val_loader, cross_entropy2d, device)
+    inference=Inference(cfg, model, val_loader, cross_entropy4d, device)
 
     # train
     t0=time.time()
@@ -90,6 +90,7 @@ def train(cfg, model_cfg='FCN/configs/vgg16-fcn32s.cfg'):
         # test
         final_epoch=epoch+1==epochs
         if not opt.notest or final_epoch:
+            print('----------------------------', opt.notest)
             results=inference.evaluate()
 
         # write result (train + val) accumulation

@@ -8,6 +8,6 @@ import platform
 import torch.nn as nn
 import torch.nn.functional as F
 
-a=torch.tensor([2,3])
-b=a
-print(a.cuda())
+a=False
+if not a or False:
+    print(2)
