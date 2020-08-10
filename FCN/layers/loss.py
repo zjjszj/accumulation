@@ -1,6 +1,8 @@
 import torch.nn as nn
 import torch.nn.functional as F
 
+
+"runtimeError: one of the variables needed for gradient computation has been modified by an inplace operation"
 def cross_entropy2d(pred, target, weight=None, size_average=True):
     """to compatible with metirc.
     Args:

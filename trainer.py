@@ -82,7 +82,7 @@ def train(cfg, model_cfg='FCN/configs/vgg16-fcn32s.cfg'):
 
             mloss=(mloss*i+loss)/(i+1)   # mean loss per batch
             mem = '%.3gG' % (torch.cuda.memory_cached() / 1E9 if torch.cuda.is_available() else 0)  # (GB)
-            s = ('%10s' + '%10.3g' * 2) % ('%g/%g' % (epoch, epochs - 1), mem, mloss)
+            s = ('%10s' * 2 + '%10.3g') % ('%g/%g' % (epoch, epochs - 1), mem, mloss)
             pbar.set_description(s)     # batch show
 
         scheduler.step()
