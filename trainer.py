@@ -88,7 +88,6 @@ def train(cfg, model_cfg='FCN/configs/vgg16-fcn32s.cfg'):
         scheduler.step()
 
         # test
-        print('----------------------------------------------------', opt.notest)
         final_epoch=epoch+1==epochs
         if not opt.notest or final_epoch:
             results=inference.evaluate()
@@ -134,7 +133,7 @@ def train(cfg, model_cfg='FCN/configs/vgg16-fcn32s.cfg'):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="PyTorch FCN Training")
     parser.add_argument("--config_file", default="FCN/config/defaults.py", help="path to config file", type=str)
-    parser.add_argument("--notest", default="False", help="val per epoch otherwise only val in last epoch.", type=str)
+    parser.add_argument("--notest", action='store_true', help="val per epoch otherwise only val in last epoch.")
     parser.add_argument("opts", help="Modify config options using the command-line", default=None, nargs=argparse.REMAINDER)
     opt = parser.parse_args()
 
