@@ -169,13 +169,14 @@ params = list(net.parameters())
 weight = np.squeeze(params[-4].data.numpy())
 CAMs=returnCAM(features,weight,idx)
 
-img = cv2.imread(IMG_URL)
-height, width, _ = img.shape
-#使用全连接层中连接最高得分神经元的权重
-used_cam=(CAMs[0])
-print(used_cam.shape)
-heatmap = cv2.applyColorMap(cv2.resize(used_cam,(width, height)), cv2.COLORMAP_JET)
-print(heatmap.shape)
-result = heatmap * 0.5 + img * 0.1
-cv2.imwrite('CAM.jpg', result)
+img = cv2.imread(IMG_URL, flags=cv2.IMREAD_GRAYSCALE)
+img.imshow()
+# height, width, _ = img.shape
+# #使用全连接层中连接最高得分神经元的权重
+# used_cam=(CAMs[0])
+# print(used_cam.shape)
+# heatmap = cv2.applyColorMap(cv2.resize(used_cam,(width, height)), cv2.COLORMAP_JET)
+# print(heatmap.shape)
+# result = heatmap * 0.5 + img * 0.1
+# cv2.imwrite('CAM.jpg', result)
 
