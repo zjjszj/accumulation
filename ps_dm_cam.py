@@ -12,13 +12,14 @@ import torch.nn.functional as F
 import torch
 from torch import nn
 
-#reid model
+
+# reid model
 class ResNet_openReid(nn.Module):
     __factory = {
         50: resnet101
     }
 
-    def __init__(self, depth=50, pretrained=False, cut_at_pooling=False,   #pretrained=False
+    def __init__(self, depth=50, pretrained=False, cut_at_pooling=False,  # pretrained=False
                  num_features=128, norm=True, dropout=0.5, num_classes=0):
         super(ResNet_openReid, self).__init__()
 
@@ -72,9 +73,9 @@ class ResNet_openReid(nn.Module):
 
         if self.has_embedding:
             x = self.feat(x)
-            x = self.feat_bn(x)  #bn层：正态分布标准化
+            x = self.feat_bn(x)  # bn层：正态分布标准化
         if self.norm:
-            x = F.normalize(x)   #bn函数：归一化到[0，1]
+            x = F.normalize(x)  # bn函数：归一化到[0，1]
         elif self.has_embedding:
             x = F.relu(x)
         if self.dropout > 0:
@@ -91,10 +92,12 @@ class ResNet_openReid(nn.Module):
         ]
         return param_groups
 
-net=ResNet_openReid()
-#load pretrained model with cuhk-sysu
-state_dict = torch.load('/kaggle/input/ps-dm-reid/ps_dm_reid/pytorch-ckpt/market/model_best.pth.tar')['state_dict']
-#state_dict = {k: v for k, v in state_dict.items() \
+
+net = ResNet_openReid()
+# load pretrained model with cuhk-sysu
+state_dict = torch.load('/kaggle/input/openreid-best-model/ps_dm_reid/pytorch-ckpt/market/model_best.pth.tar')[
+    'state_dict']
+# state_dict = {k: v for k, v in state_dict.items() \
 #        if not ('reduction' in k or 'softmax' in k)}
 net.load_state_dict(state_dict, False)
 print('net size: {:.5f}M'.format(sum(p.numel() for p in net.parameters()) / 1e6))
@@ -107,23 +110,24 @@ import numpy as np
 import cv2
 
 # input image
-IMG_URL = '/kaggle/input/testimage/1.jpg'
+IMG_URL = '/kaggle/input/testimg/s3543.jpg'
 
 finalconv_name = 'layer4'
 net.eval()
-
+## print(net)
 # get the softmax weight
 params = list(net.parameters())
 weight_softmax = np.squeeze(params[-4].data.numpy())
 
+
 def returnCAM(feature_conv, weight_softmax, class_idx):
-    print('len(class_idx)=',len(class_idx))
+    ## print('len(class_idx)=',len(class_idx))
     # generate the class activation maps upsample to 256x256
     size_upsample = (256, 256)
     bz, nc, h, w = feature_conv.shape
     output_cam = []
     for idx in class_idx:
-        cam = weight_softmax[idx].dot(feature_conv.reshape((nc, h*w)))
+        cam = weight_softmax[idx].dot(feature_conv.reshape((nc, h * w)))
         cam = cam.reshape(h, w)
         cam = cam - np.min(cam)
         cam_img = cam / np.max(cam)
@@ -133,27 +137,25 @@ def returnCAM(feature_conv, weight_softmax, class_idx):
 
 
 normalize = transforms.Normalize(
-   mean=[0.485, 0.456, 0.406],
-   std=[0.229, 0.224, 0.225]
+    mean=[0.485, 0.456, 0.406],
+    std=[0.229, 0.224, 0.225]
 )
 preprocess = transforms.Compose([
-   transforms.Resize((224,224)),
-   transforms.ToTensor(),
-   normalize
+    transforms.Resize((224, 224)),
+    transforms.ToTensor(),
+    normalize
 ])
 
-img_pil=Image.open(IMG_URL)
+img_pil = Image.open(IMG_URL)
 img_pil.save('test.jpg')
 
 img_tensor = preprocess(img_pil)
 img_variable = Variable(img_tensor.unsqueeze(0))
-logit = net(img_variable)
-
-#最后一层特征图
-last_conv=nn.Sequential(*list(net._modules.get('base').children())[:-2])
-features=last_conv(img_variable)
-features=features.data.cpu().numpy()
-
+logit = net(img_variable)  # (128)
+# 最后一层特征图
+last_conv = nn.Sequential(*list(net._modules.get('base').children())[:-2])
+features = last_conv(img_variable)  # (2048, 7, 7)
+features = features.data.cpu().numpy()
 
 h_x = F.softmax(logit, dim=1).data.squeeze()
 probs, idx = h_x.sort(0, True)
@@ -166,17 +168,16 @@ idx = idx.numpy()
 
 
 params = list(net.parameters())
-weight = np.squeeze(params[-4].data.numpy())
-CAMs=returnCAM(features,weight,idx)
+weight = np.squeeze(params[-4].data.numpy())  # (128, 2048)
+CAMs = returnCAM(features, weight, idx)
 
-img = cv2.imread(IMG_URL, flags=cv2.IMREAD_GRAYSCALE)
-img.imshow()
-# height, width, _ = img.shape
-# #使用全连接层中连接最高得分神经元的权重
-# used_cam=(CAMs[0])
-# print(used_cam.shape)
-# heatmap = cv2.applyColorMap(cv2.resize(used_cam,(width, height)), cv2.COLORMAP_JET)
-# print(heatmap.shape)
-# result = heatmap * 0.5 + img * 0.1
-# cv2.imwrite('CAM.jpg', result)
+img = cv2.imread(IMG_URL)
+height, width, _ = img.shape
+# show all result
+for i in range(128):
+    used_cam = (CAMs[i])
+    heatmap = cv2.applyColorMap(cv2.resize(used_cam, (width, height)), cv2.COLORMAP_JET)
+    cv2.imwrite('heatmap_' + str(i) + '.jpg', heatmap)
 
+    result = heatmap * 0.8 + img * 0.2
+    cv2.imwrite('CAM_' + str(i) + '.jpg', result)
