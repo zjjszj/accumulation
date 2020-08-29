@@ -92,9 +92,7 @@ class Grad_CAM:
         grad_cam=torch.sum(grad_*last_conv_feat, dim=1).squeeze()  # (7, 7)
         grad_cam=nn.ReLU()(grad_cam).unsqueeze_(2)
         grad_cam= grad_cam.detach_().numpy()        # (7, 7, 1)
-        g_c=cv2.resize(grad_cam[:,:,::-1], img.shape[2:])  # (222, 220) w, h
-        # g_c deal with ????
-
+        g_c=cv2.resize(grad_cam[:,:,::-1], img.shape[2:])
         return g_c
 
     def get_conv_and_output(self, x, children_name):
@@ -190,7 +188,7 @@ def deprocess_image(img):
 def show_g_c_heatmap(g_c, c_img):
     """show grad_cam img.
     Args:
-        g_c(numpy): rgb (h, w)
+        g_c(numpy): rgb (h, w) 0-1
         c_img(CV2): ndarray 0-1
     """
     # channels: 1->3
