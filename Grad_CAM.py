@@ -1,6 +1,9 @@
 """
 @author: zj
 @email: hblfgazj@163.com
+
+1. cv2.resize() can limit input and output to 0-1/0-255 according to input value . so can`t need control by yourself.
+2. cv2.imread() return numpy 0-255. cv2.imwrite() take 0-255
 """
 import cv2
 from torchvision import transforms
@@ -194,6 +197,7 @@ def show_g_c_heatmap(g_c, c_img):
     # channels: 1->3
     g_c = cv2.applyColorMap(np.uint8(255 * g_c), cv2.COLORMAP_JET)  # numpy (222, 220, 3)
     cv2.imwrite('grad_cam.jpg',g_c)
+    # add np.float32, otherwise type of result is float64
     g_c=np.float32(g_c)/255     # 0-1
     g_c_img=0.8*g_c+0.2*np.float32(c_img)
     g_c_img=g_c_img/np.max(g_c_img)   # 0-1
@@ -211,6 +215,7 @@ if __name__ == '__main__':
     grad_=gm(input)  #  # (3, 224, 224)
     print(grad_.shape)
     grad_=grad_.transpose((1, 2, 0))
+    # clip grad_ to show
     gb=deprocess_image(grad_)   # ndarray 0-255
     cv2.imwrite('gb.jpg', gb)
     # plot ggc(guided grad_cam).jpg
