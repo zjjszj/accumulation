@@ -28,7 +28,6 @@ y_major_locator = MultipleLocator(1)  # 设置y轴置刻度
 
 
 
-
 plt.ylim(0, 7)
 plt.tick_params(labelsize=7.5)   # 设置刻度字号
 # plt.subplot(2, 1, 2)
