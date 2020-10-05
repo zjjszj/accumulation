@@ -35,3 +35,17 @@ def get_args():
     return args
 
 
+# 5 mkdir_if_missing
+def mkdir_if_missing(dir_path):
+    try:
+        os.makedirs(dir_path)
+    except OSError as e:
+        if e.errno != errno.EEXIST:
+            raise
+
+# 6 tensorboard
+from torch.utils.tensorboard import SummaryWriter
+
+path='<日志路径>'
+tfboard=SummaryWriter(log_dir=path)
+tfboard.add_scalar('<pic_name>', scalar_value=2.3, global_step=1)

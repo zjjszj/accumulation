@@ -1,5 +1,11 @@
 # journey gamma-top1
 #γ值与top-1图
+
+import matplotlib.pyplot as plt
+from matplotlib.ticker import MultipleLocator
+import numpy as np
+
+
 fig=plt.figure(figsize=(2.7, 2.2))
 x1 = np.arange(0, 1, 0.05)
 y1 = [82.2, 83.4, 84.3, 86.2, 86.2, 85.7, 87.3, 87.2, 88.4, 90.5, 90.6, 90.7, 90.3, 89.8, 87.4, 82.4, 78.2, 76.9, 72.4,
@@ -14,11 +20,11 @@ plt.xlabel('γ', fontsize='7.5')  # 7.5px为六号字体
 plt.ylabel('top-1%', fontsize='7.5')
 plt.xlim(0, 1)
 ax = plt.gca()
-y_major_locator = MultipleLocator(5)
+y_major_locator = MultipleLocator(5) # 设置y轴刻度
 ax.yaxis.set_major_locator(y_major_locator)
 
 plt.ylim(50, 100)
-plt.tick_params(labelsize=7.5)   # s设置刻度字号
+plt.tick_params(labelsize=7.5)   # 设置刻度字号
 # plt.subplot(2, 1, 2)
 
 # 线的标签
