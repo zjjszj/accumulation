@@ -1,0 +1,1 @@
+from .maskrcnn_with_resnet import get_model_instance_segmentation
