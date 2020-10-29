@@ -47,5 +47,67 @@ def mkdir_if_missing(dir_path):
 from torch.utils.tensorboard import SummaryWriter
 
 path='<日志路径>'
-tfboard=SummaryWriter(log_dir=path)
-tfboard.add_scalar('<pic_name>', scalar_value=2.3, global_step=1)
+# comment: 默认为'log_dir'添加前缀，如果log_dir指定则没有影响
+tfboard = SummaryWriter(log_dir=config.TRAIN_TENSORBOARD_DIR,
+                       filename_suffix=f'OPT_{config.TRAIN_OPTIMIZER}_LR_{config.learning_rate}_BS_{config.batch}_Sub_{config.subdivisions}_Size_{config.width}',
+                       comment=f'OPT_{config.TRAIN_OPTIMIZER}_LR_{config.learning_rate}_BS_{config.batch}_Sub_{config.subdivisions}_Size_{config.width}')
+tfboard.add_scalar('train/Loss', scalar_value=2.33, global_step=1)
+tfboard.close()
+
+
+# 7 使用logging记录输出信息
+import logging
+import datetime
+import os
+import sys
+
+def init_logger(log_file=None, log_dir=None, log_level=logging.INFO, mode='w', stdout=True):
+    """
+    log_dir: 日志文件的文件夹路径
+    mode: 'a', append; 'w', 覆盖原文件写入.
+    """
+    def get_date_str():
+        now = datetime.datetime.now()
+        return now.strftime('%Y-%m-%d_%H-%M-%S')
+
+    fmt = '%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s: %(message)s'
+    if log_dir is None:
+        log_dir = '~/temp/log/'
+    if log_file is None:
+        log_file = 'log_' + get_date_str() + '.txt'
+    if not os.path.exists(log_dir):
+        os.makedirs(log_dir)
+    log_file = os.path.join(log_dir, log_file)
+    # 此处不能使用logging输出
+    print('log file path:' + log_file)
+
+    logging.basicConfig(level=logging.DEBUG,
+                        format=fmt,
+                        filename=log_file,
+                        filemode=mode)
+
+    if stdout:
+        console = logging.StreamHandler(stream=sys.stdout)
+        console.setLevel(log_level)
+        formatter = logging.Formatter(fmt)
+        console.setFormatter(formatter)
+        logging.getLogger('').addHandler(console)
+
+    return logging
+
+
+def _get_date_str():
+    now = datetime.datetime.now()
+    return now.strftime('%Y-%m-%d_%H-%M')
+
+Logging=init_logger(log_dir='f:/log')
+Logging.info('mesmeddddddddddddddddddd')
+Logging.info('mesmeddddddddddddddddddd')
+Logging.info('mesmeddddddddddddddddddd')
+Logging.info('mesmeddddddddddddddddddd')
+Logging.info('mesmeddddddddddddddddddd')
+
+
+# 8 输出模型size（参数数量，单位是兆（M））
+# 如果要输出模型内存占用大小，在乘以每个数字占用的字节数，对于float32类型的数字，占4个字节，就乘以4，结果单位是MB
+print('net size: {:.5f}M'.format(sum(p.numel() for p in net.parameters()) / 1e6))

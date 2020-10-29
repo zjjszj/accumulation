@@ -17,10 +17,11 @@ model_path='/path/{}.pkl'
 state_dict = torch.load(model_path)
 # way1
 model.load_state_dict({k:v for k,v in state_dict.items() if k in model.state_dict()})
-# way2: same as way1?
+# way2: same as way1
+# unexpectd key:本模型没有而加载的模型有的key
+# missing key:本模型有而加载的模型没有的key
+# strict=True/False: 当strict=True时，出现以上两个任何一个错误就会终止执行，当为false时，会忽略错误。
 model.load_state_dict(state_dict, strict=False)
-
-
 
 
 """

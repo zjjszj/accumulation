@@ -1,8 +1,5 @@
-def swap(i,j):
-    t=i
-    i=j
-    j=t
-    return i, j
+from torchvision.models.resnet import resnet18
+import torch
 
-a=[1,2]
-print(sum(a))
+m=resnet18()
+m.load_state_dict()
